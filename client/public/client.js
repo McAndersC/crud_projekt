@@ -1,7 +1,9 @@
 let form = document.querySelector('#userform');
+let userLoginform = document.querySelector('#userLoginform');
+
 
 // Metode til at sender vores nye bruger til vores endpoint.
-let submitNewUser = (e) => {
+const submitNewUser = (e) => {
 
     // Forhindre vorew event i at udføre default. (vi tager over herfra)
     e.preventDefault();
@@ -11,10 +13,10 @@ let submitNewUser = (e) => {
 
     // Opretter et nyt user objekt
     let newUser =  {
-        "id" : "fra clienten html",
-        "username": formInputs['username'].value,
-        "name" : formInputs['name'].value,
-        "email" : formInputs['email'].value
+        'id' : 'fra clienten html',
+        'username': formInputs['username'].value,
+        'name' : formInputs['name'].value,
+        'email' : formInputs['email'].value
     }
 
     // Benytter fetch til at POST(e) vores newUser objekt til vores endpoint (localhost:3000/users/register)
@@ -28,5 +30,19 @@ let submitNewUser = (e) => {
 
 }
 
+const loginUser = (e) => {
+    e.preventDefault();
+    let formLoginInputs = userLoginform.elements;
+
+    console.log('ladidaaaa', formLoginInputs);
+}
+
 // Opretter en event listner der lytter på om vores form bliver submitted.
-form.addEventListener('submit', submitNewUser);
+if(form)
+{
+    form.addEventListener('submit', submitNewUser);
+}
+
+if(userLoginform) {
+    userLoginform.addEventListener('submit', loginUser);
+}
