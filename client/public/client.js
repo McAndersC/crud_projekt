@@ -39,7 +39,6 @@ const submitNewUser = (e) => {
 // Metode til at logge ind.
 const loginUser = (e) => {
 
-  
     e.preventDefault();
 
     let userLoginForm = e.currentTarget;
