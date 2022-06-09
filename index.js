@@ -2,9 +2,10 @@ const server = require('./lib/server.js');
 
 const app = {}
 
+// Vi initialiserer vores applikation.
 app.init = () => {
 
-    console.log('Initialisere Applikationen')
+    // Vi kalder run metoden på vores server objekt.
     server.run();
 
 }
