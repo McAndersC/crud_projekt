@@ -1,6 +1,3 @@
-
-
-
 // Metode til at sender vores nye bruger til vores endpoint.
 const submitNewUser = (e) => {
 
@@ -29,7 +26,8 @@ const submitNewUser = (e) => {
         body: JSON.stringify(newUser)
     }).then((response) => response.json()).then((response) => {
 
-        console.log(response);
+        // Denne besked skal vi vise brugeren.
+        showResponse(response.response);
         listUsers();
 
     })
@@ -62,16 +60,106 @@ const loginUser = (e) => {
     }).then((response) => response.json()).then((response) => {
 
         // Denne besked skal vi vise brugeren.
-        console.log(response.response);
+        showResponse(response.response);
         
     })
 
 }
 
+// Metode til at opdatere bruger.
+const updateUser = (e) => {
+    e.preventDefault();
+
+    let userUpdateForm = e.currentTarget;
+
+    // Samler vores input vir form.elements.
+    let userUpdateFormInputs = userUpdateForm.elements;
+
+    let user =  {
+        'username': userUpdateFormInputs['username'].value,
+        'email' : userUpdateFormInputs['email'].value
+    }
+
+    // Benytter fetch til at POST(e) vores newUser objekt til vores endpoint (localhost:3000/users/register)
+    fetch('http://localhost:3000/users/update', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+
+    }).then((response) => response.json()).then((response) => {
+
+        // Denne besked skal vi vise brugeren.
+        showResponse(response.response);
+        
+    });
+
+}
+
+// Metode til at slette bruger.
+const deleteUser = (e) => {
+    e.preventDefault();
+
+    let userUpdateForm = e.currentTarget;
+
+    // Samler vores input vir form.elements.
+    let userUpdateFormInputs = userUpdateForm.elements;
+
+    let user =  {
+        'username': userUpdateFormInputs['username'].value
+    }
+
+    // Benytter fetch til at POST(e) vores newUser objekt til vores endpoint (localhost:3000/users/register)
+    fetch('http://localhost:3000/users/delete', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+
+    }).then((response) => response.json()).then((response) => {
+
+        // Denne besked skal vi vise brugeren.
+        showResponse(response.response);
+        listUsers();
+    });
+
+}
+
+// Metode til at vise response beskeden.
+const showResponse = (response) => {
+
+    let status = document.querySelector('.status-bar');
+    status.textContent = response;
+    status.classList.add('active');
+
+    setTimeout(() => {
+        status.classList.remove('active');
+    }, 3000)
+
+}
+
+// Metode til at liste brugerer hvis der er en <div class="list-users-container"></div> på siden..
 const listUsers = () => {
 
     // Benytter fetch til at GET(e) alle vores "users" fra vores endpoint (localhost:3000/users/all).
     let usersContainer = document.querySelector('.list-users-container');
+
+    const listRowHeaderTmpl = `
+        <div class="list-users-row">
+            <div><b>ID</b></div>
+            <div><b>USERNAME</b></div>
+        </div>
+    `;
+
+    const listRowItemTmpl = (user) => `
+        <div class="list-users-row">
+            <div>${user.id}</div>
+            <div>${user.username}</div>
+        </div>
+    `;
+
     if(usersContainer)
     {
         fetch('http://localhost:3000/users/all', {
@@ -84,17 +172,16 @@ const listUsers = () => {
             let usersContainer = document.querySelector('.list-users-container');
             usersContainer.innerHTML = '';
         
-            var unorderList = document.createElement('ul')
+            var unorderList = document.createElement('div');
             let list = usersContainer.insertAdjacentElement('beforeend', unorderList);
             let users = response;
-    
+            list.insertAdjacentHTML('beforeend', listRowHeaderTmpl);
+
             users.forEach((user) => {
-                list.insertAdjacentHTML('beforeend', `<li>${user.id} - ${user.username}</li>`)
+                list.insertAdjacentHTML('beforeend', listRowItemTmpl(user))
             })
         })
     }
-
-
 }
 
 
@@ -106,7 +193,12 @@ client.init = () => {
     // Hvis formen er tilstede så tilføjer vi en eventlistner
 
     let form = document.querySelector('#userform');
+
     let userLoginform = document.querySelector('#userLoginform');
+    let userUpdateform = document.querySelector('#userUpdateForm');
+    let userDeleteform = document.querySelector('#userDeleteForm');
+
+    let navBar = document.querySelector('.nav-bar');
     
     if(form)
     {
@@ -117,7 +209,29 @@ client.init = () => {
         userLoginform.addEventListener('submit', loginUser);
     }
 
+    if(userUpdateform)
+    {
+        userUpdateform.addEventListener('submit', updateUser);
+    }
+
+    if(userDeleteform)
+    {
+        userDeleteform.addEventListener('submit', deleteUser);
+    }
     
+    if(navBar) 
+    {
+        navBar.insertAdjacentHTML('beforeend', `
+            <a href="/">Forside</a>
+            <a href="/Login">Login</a>
+
+            <a href="/create">(C)reate</a>
+            <a href="/read">(R)ead</a>
+            <a href="/update">(U)pdate</a>
+            <a href="/delete">(D)elete</a>
+        `)
+    }
+
     listUsers();
 }
 

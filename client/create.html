@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/public/client.js" defer></script>
     <link href="/public/index.css" rel="stylesheet"/>
-    <title>Login</title>
+    <title>Opret Bruger</title>
   
 </head>
-
 <body>
-   <h1>Login</h1> 
+   <h1>Opret Bruger.</h1> 
    <div class="status-bar">STATUS</div>
    <div class="nav-bar"></div>
-   <form id="userLoginform">
+   <form id="userform">
 
+       <label>Name
+        <input type="text" name="name" value="TestNavn">
+       </label>
        <label>Brugernavn
         <input type="text" name="username" value="TestBrugerNavn">
        </label>
-       <label>Password
-        <input type="password" name="password">
+       <label>Email
+        <input type="email" name="email" value="TestNavn@testemail.com">
        </label>
-
+       <label>Password
+        <input type="password" name="password" value="1234">
+       </label>
        <button type="submit">Tilføj Bruger</button>
 
    </form>
+
+   <div class="list-users-container"></div>
 
 </body>
 </html>
