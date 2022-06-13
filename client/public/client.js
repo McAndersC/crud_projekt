@@ -148,15 +148,15 @@ const listUsers = () => {
 
     const listRowHeaderTmpl = `
         <div class="list-users-row">
-            <div><b>ID</b></div>
-            <div><b>USERNAME</b></div>
+            <div><strong>ID</strong></div>
+            <div><strong>USERNAME</strong></div>
         </div>
     `;
 
-    const listRowItemTmpl = (user) => `
+    const listRowItemTmpl = (id, username) => `
         <div class="list-users-row">
-            <div>${user.id}</div>
-            <div>${user.username}</div>
+            <div>${id}</div>
+            <div>${username}</div>
         </div>
     `;
 
@@ -174,11 +174,12 @@ const listUsers = () => {
         
             var unorderList = document.createElement('div');
             let list = usersContainer.insertAdjacentElement('beforeend', unorderList);
+
             let users = response;
             list.insertAdjacentHTML('beforeend', listRowHeaderTmpl);
 
             users.forEach((user) => {
-                list.insertAdjacentHTML('beforeend', listRowItemTmpl(user))
+                list.insertAdjacentHTML('beforeend', listRowItemTmpl(user.id, user.username))
             })
         })
     }
@@ -233,6 +234,7 @@ client.init = () => {
     }
 
     listUsers();
+    
 }
 
 client.init()

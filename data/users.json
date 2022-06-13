@@ -1,14 +1,1 @@
-[
-    {
-        "id": "0c807464-d89b-40ac-95f3-afc207baa65a",
-        "username": "TestBrugerNavn"
-    },
-    {
-        "id": "968b3c77-c100-4b2a-840b-895837d05e44",
-        "username": "TestBrugerNavn4"
-    },
-    {
-        "id": "64c3d349-6288-4002-a672-32ac68589250",
-        "username": "TestBrugerNavn44"
-    }
-]
+[{"id":"f64ef641-4d27-43bd-8142-4727b231bf01","username":"TestBrugerNavn"},{"id":"ee825f40-3125-4a6d-8c05-e2c089c9430b","username":"TestBrugerNavn3"},{"id":"eb3cfb1e-bb85-40e3-aea5-6a9fbaa848e5","username":"TestBrugerNavn2"}]
